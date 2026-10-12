@@ -7,7 +7,7 @@ int main()
     if( get_message() != expected )
     {
         std::cerr << "Wrong message: got \"" << get_message()
-                  << "\", expected \"" << expected << "\"" << std::endl;
+                  << "\", expected \"" << expected << "\"\n";
         return 1; // a non-zero return code means the test FAILED
     }
     return 0; // zero means the test PASSED
