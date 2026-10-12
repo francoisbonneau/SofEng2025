@@ -15,6 +15,7 @@ cmake/           fichiers de configuration generes par CMake
 .github/workflows/
     ci.yml       compile + teste a chaque push / Pull Request
     cd.yml       publie une Release + une image Docker a chaque tag v*
+cours/docker/    le Dockerfile simple puis multi-stage (voir son README)
 cours/cicd/      les workflows construits etape par etape (voir son README)
 ```
 
@@ -36,9 +37,11 @@ cmake --build build --target package
 ## Docker
 
 ```bash
-docker build -t hello .   # construire l'image (compile ET teste le projet)
+docker build -t hello .   # construire l'image (compile le projet)
 docker run --rm hello     # lancer le programme
 ```
+
+> Pour aller plus loin (image 6 fois plus petite) : [cours/docker/README.md](cours/docker/README.md).
 
 ## CI : Integration Continue
 
