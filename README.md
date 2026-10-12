@@ -15,6 +15,7 @@ cmake/           fichiers de configuration generes par CMake
 .github/workflows/
     ci.yml       compile + teste a chaque push / Pull Request
     cd.yml       publie une Release + une image Docker a chaque tag v*
+cours/cicd/      les workflows construits etape par etape (voir son README)
 ```
 
 ## Compiler et tester (CMake)
@@ -40,6 +41,8 @@ docker run --rm hello     # lancer le programme
 ```
 
 ## CI : Integration Continue
+
+> Pour construire la CI/CD pas a pas en cours : [cours/cicd/README.md](cours/cicd/README.md).
 
 A chaque `push` sur `master` et a chaque Pull Request, GitHub Actions
 (`.github/workflows/ci.yml`) :
