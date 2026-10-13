@@ -165,8 +165,8 @@ Resultat visible dans l'onglet **Actions** et sur chaque commit / PR (coche vert
 
 | Message de commit | Nouvelle version (depuis 1.2.3) |
 |---|---|
-| `fix: ...` | `1.2.4` |
-| `feat: ...` | `1.3.0` |
+| `fix(..): ...` | `1.2.4` |
+| `feat(..): ...` | `1.3.0` |
 | `BREAKING CHANGE: ...` dans le corps du commit | `2.0.0` |
 | `docs: ...`, `ci: ...`, `test: ...`, `refactor: ...` | pas de nouvelle version |
 
