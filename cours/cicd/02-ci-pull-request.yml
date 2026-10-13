@@ -10,7 +10,12 @@ on:
   pull_request:          # NOUVEAU
 
 jobs:
+  # ==========================================================================
+  # CI (Integration Continue) : verifier chaque changement
+  # ==========================================================================
+
   build-and-test:
+    name: CI - Compiler et tester
     runs-on: ubuntu-latest
 
     steps:
@@ -25,3 +30,8 @@ jobs:
 
       - name: Tester (ctest)
         run: ctest --test-dir build --output-on-failure
+
+      - name: Installer et lancer le programme
+        run: |
+          cmake --install build --prefix install
+          ./install/bin/greet Alice

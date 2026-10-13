@@ -1,49 +1,60 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
-# set the project name
-project(HelloProj VERSION 1.0)
+# Project name. No version here: it is computed by semantic-release from the
+# commit messages, and given to CPack by the CI (-DCPACK_PACKAGE_VERSION=...)
+project(Greeter LANGUAGES CXX)
 
-# specify the C++ standard
-# use the CMAKE_CXX_STANDARD variable
-set(CMAKE_CXX_STANDARD  11)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+# C++ standard used by all the targets
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#export configuration to source code
-configure_file(cmake/HelloProjConfig.h.in  HelloProjConfig.h)
+# Options, to change with: cmake -DGREETER_BUILD_TESTS=OFF ...
+option(GREETER_BUILD_APPS "Compile apps" ON)
+option(GREETER_BUILD_TESTS "Compile tests" ON)
 
-#add libraries
-add_subdirectory(src/basic)
+# Pass information known by CMake (system, compiler...) to the source code:
+# generates greeter_config.h in the build folder
+configure_file(cmake/greeter_config.h.in greeter_config.h)
 
-#add executable
-option(HELLOWORD_WITH_EXECUTABLES "Compile mains" ON)
-if(HELLOWORD_WITH_EXECUTABLES)
-    message(STATUS "Configuring Hello World with executables")
-    add_subdirectory(mains)
+# Libraries (one folder per library in src/)
+add_subdirectory(src/greeter)
+
+# Executables
+if(GREETER_BUILD_APPS)
+    message(STATUS "Configuring Greeter with executables")
+    add_subdirectory(apps)
 endif()
 
-#add tests
-option(HELLOWORD_WITH_TESTS "Compile tests" ON)
-if(HELLOWORD_WITH_TESTS)
-    message(STATUS "Configuring Hello World with tests")
+# Tests
+if(GREETER_BUILD_TESTS)
+    message(STATUS "Configuring Greeter with tests")
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-# create the package configuration file
-include(CMakePackageConfigHelpers) 
+# ---- Installation: lets other projects use find_package(Greeter) ----
+include(CMakePackageConfigHelpers)
+
+# File listing the installed libraries (see install(TARGETS ... EXPORT) in src/)
+install(EXPORT GreeterTargets
+    FILE GreeterTargets.cmake
+    DESTINATION cmake/
+)
+
+# GreeterConfig.cmake: the file read by find_package(Greeter)
 configure_package_config_file(
-    cmake/HelloProjConfig.cmake.in 
-    HelloProjConfig.cmake 
+    cmake/GreeterConfig.cmake.in
+    GreeterConfig.cmake
     INSTALL_DESTINATION cmake/
 )
-
-#install project configuration file
 install(
-    FILES ${PROJECT_BINARY_DIR}/HelloProjConfig.cmake 
-    DESTINATION cmake/ 
+    FILES ${PROJECT_BINARY_DIR}/GreeterConfig.cmake
+    DESTINATION cmake/
 )
 
-# Configure CPack
+# ---- Packaging: cmake --build build --target package ----
+# The archive version is given on the command line, for example:
+#   cmake -S . -B build -DCPACK_PACKAGE_VERSION=1.2.0
 if(WIN32)
     set(CPACK_GENERATOR "ZIP")
 else()
@@ -52,5 +63,3 @@ endif()
 
 # This must always be last!
 include(CPack)
-
-

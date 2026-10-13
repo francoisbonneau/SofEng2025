@@ -1,11 +1,10 @@
 # ETAPE 6 : publier aussi l image Docker
 # Nouveau : le job "docker" et la permission "packages: write".
-# C est la version finale de cd.yml.
 #
 # CD = Deploiement Continu
 # Se declenche uniquement quand on pousse un tag qui commence par "v" :
-#   git tag v1.0
-#   git push origin v1.0
+#   git tag v1.0.0
+#   git push origin v1.0.0
 # Resultat :
 #   1. une "Release" GitHub avec l'archive du programme (faite par CPack)
 #   2. une image Docker publiee sur ghcr.io (onglet "Packages" du depot)
@@ -22,14 +21,20 @@ permissions:
   packages: write  # publier l'image Docker
 
 jobs:
+  # ==========================================================================
+  # CD (Deploiement Continu) : livrer une nouvelle version
+  # ==========================================================================
+
   release:
+    name: CD - Release GitHub
     runs-on: ubuntu-latest
     steps:
       - name: Recuperer le code
         uses: actions/checkout@v4
 
       - name: Configurer (cmake)
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        # La version de l'archive vient du tag : v1.0.0 -> 1.0.0
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCPACK_PACKAGE_VERSION=${GITHUB_REF_NAME#v}
 
       - name: Compiler et creer l'archive (cpack)
         run: cmake --build build --target package
@@ -40,6 +45,7 @@ jobs:
           files: build/*.tar.gz
 
   docker:
+    name: CD - Image Docker
     runs-on: ubuntu-latest
     steps:
       - name: Recuperer le code

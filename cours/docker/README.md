@@ -13,8 +13,8 @@ Deux versions du Dockerfile, a lancer depuis la **racine du projet**
 ## Etape 1 : un Dockerfile simple
 
 ```bash
-docker build -f cours/docker/01-simple.Dockerfile -t hello-simple .
-docker run --rm hello-simple
+docker build -f cours/docker/01-simple.Dockerfile -t greeter-simple .
+docker run --rm greeter-simple
 ```
 
 Les instructions a connaitre :
@@ -37,8 +37,8 @@ Les instructions a connaitre :
 ## Entre les deux : mesurer
 
 ```bash
-docker images hello-simple    # environ 500 MB !
-docker history hello-simple   # taille de chaque couche
+docker images greeter-simple   # environ 500 MB !
+docker history greeter-simple  # taille de chaque couche
 ```
 
 Extrait de `docker history` :
@@ -59,9 +59,9 @@ Le "nettoyage" ajoute meme 1 MB.
 ## Etape 2 : multi-stage build
 
 ```bash
-docker build -f cours/docker/02-multistage.Dockerfile -t hello-multi .
-docker run --rm hello-multi
-docker images hello-multi     # environ 80 MB
+docker build -f cours/docker/02-multistage.Dockerfile -t greeter-multi .
+docker run --rm greeter-multi
+docker images greeter-multi    # environ 80 MB
 ```
 
 Idee : deux `FROM` dans le meme fichier.
@@ -80,7 +80,7 @@ Autres bonnes pratiques visibles dans ce fichier :
   meme `RUN` ;
 - `--no-install-recommends` : n'installer que le necessaire ;
 - `WORKDIR` au lieu de `cd` ;
-- `CMD ["HelloWorld"]` (forme JSON) : le programme est lance directement,
+- `CMD ["greet"]` (forme JSON) : le programme est lance directement,
   sans passer par un shell.
 
 | | Etape 1 | Etape 2 |

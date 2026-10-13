@@ -1,19 +1,21 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
-if(NOT TARGET basic)
-	# set the project name
-	project(HelloProjTest)
-	find_package(HelloProj)
-	enable_testing()
+# The tests can also be built alone, against an installed Greeter:
+#   cmake -S tests -B build-tests -DCMAKE_PREFIX_PATH=<install folder>
+if(NOT TARGET greeter)
+    project(GreeterTests LANGUAGES CXX)
+    find_package(Greeter REQUIRED)
+    enable_testing()
 endif()
 
-#add the executable target named HelloWorld
-add_executable(test_hello test-hello.cpp)
-target_link_libraries(test_hello PRIVATE basic)
-add_test(NAME test_hello COMMAND test_hello)
+# add_greeter_test(<name>): compile <name>.cpp, link it with greeter
+# and register it in ctest. A test passes if main() returns 0.
+function(add_greeter_test name)
+    add_executable(${name} ${name}.cpp)
+    target_link_libraries(${name} PRIVATE greeter)
+    add_test(NAME ${name} COMMAND ${name})
+endfunction()
 
-
-#add the executable target named HelloWorld
-add_executable(test_version test-version.cpp)
-target_link_libraries(test_version PRIVATE basic)
-add_test(NAME test_version COMMAND test_version)
+# One line per test
+add_greeter_test(test-message)
+add_greeter_test(test-build-info)

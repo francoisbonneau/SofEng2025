@@ -20,7 +20,7 @@ RUN cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
 # ---- Etape 2 : image finale ---------------------------------------------
 # On repart d'une image propre : ni compilateur, ni code source
 FROM debian:stable-slim
-COPY --from=build /install/bin/HelloWorld /usr/local/bin/HelloWorld
+COPY --from=build /install/bin/greet /usr/local/bin/greet
 
 # Commande lancee par "docker run"
-CMD ["HelloWorld"]
+CMD ["greet"]

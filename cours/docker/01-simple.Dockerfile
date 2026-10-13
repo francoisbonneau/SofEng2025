@@ -13,4 +13,4 @@ RUN cd MyProject/build && cmake -G "Ninja" .. && ninja && ninja install
 # Clean to keep the image small
 RUN rm -rf MyProject && apt-get purge -y cmake ninja-build
 # Tada
-CMD HelloWorld
+CMD greet
