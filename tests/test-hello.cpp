@@ -1,7 +1,14 @@
-#include<basic/message.h>
+#include <basic/message.h>
+#include <iostream>
 
 int main()
 {
-    hello_world();
-    return 0;
+    const std::string expected = "Hello World!";
+    if( get_message() != expected )
+    {
+        std::cerr << "Wrong message: got \"" << get_message()
+                  << "\", expected \"" << expected << "\"\n";
+        return 1; // a non-zero return code means the test FAILED
+    }
+    return 0; // zero means the test PASSED
 }
