@@ -185,6 +185,7 @@ La premiere version publiee est `1.0.0`. S'il y a une nouvelle version, la CI cr
 
 ```bash
 docker run --rm ghcr.io/francoisbonneau/sofeng2025:latest
+docker run --rm ghcr.io/francoisbonneau/sofeng2025:1.0.0 greet Alice   # une version precise, avec un prenom
 ```
 
 Conseil : fusionner les Pull Requests avec **Squash and merge**, et donner a la PR
