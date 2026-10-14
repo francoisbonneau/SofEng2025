@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 # The tests can also be built alone, against an installed Greeter:
 #   cmake -S tests -B build-tests -DCMAKE_PREFIX_PATH=<install folder>
+# or directly against the build folder of Greeter, without installing:
+#   cmake -S tests -B build-tests -DGreeter_DIR=<build folder>
 if(NOT TARGET greeter)
     project(GreeterTests LANGUAGES CXX)
     find_package(Greeter REQUIRED)

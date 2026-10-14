@@ -1,9 +1,14 @@
 # Library "greeter".
 # To add a feature: create the .h in include/greeter/, the .cpp here,
 # and add the .cpp to the list below.
-add_library(greeter STATIC
-    message.cpp
-    build_info.cpp
+add_library(greeter STATIC)
+
+target_sources(greeter
+    PRIVATE
+       "${PROJECT_SOURCE_DIR}/src/greeter/message.cpp"
+       "${PROJECT_SOURCE_DIR}/src/greeter/build_info.cpp"
+       "${PROJECT_SOURCE_DIR}/include/greeter/message.h"
+       "${PROJECT_SOURCE_DIR}/include/greeter/build_info.h"
 )
 
 target_include_directories(greeter

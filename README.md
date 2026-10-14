@@ -73,7 +73,12 @@ find_package(Greeter REQUIRED)
 target_link_libraries(mon_programme PRIVATE greeter)
 ```
 
-(les tests le font : `cmake -S tests -B build-tests -DCMAKE_PREFIX_PATH=install`)
+Les tests le font, au choix :
+
+```bash
+cmake -S tests -B build-tests -DCMAKE_PREFIX_PATH=install   # apres cmake --install
+cmake -S tests -B build-tests -DGreeter_DIR=build           # directement depuis le dossier build
+```
 
 ## Ajouter une fonctionnalite
 
