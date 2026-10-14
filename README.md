@@ -60,11 +60,13 @@ Installer, puis creer l'archive a distribuer (CPack) :
 
 ```bash
 cmake --install build --prefix install           # -> install/bin, lib, include, cmake
-cmake --build build --target package             # -> build/Greeter-0.1.1-Linux.tar.gz
+cmake --build build --target package             # -> build/Greeter-dev-Linux.tar.gz
 ```
 
-La version (`0.1.1` par defaut) est donnee par la CI au moment d'une Release :
+Sans version, l'archive s'appelle `Greeter-dev-...` : c'est une archive locale,
+pas une version publiee. La vraie version est donnee par la CI au moment d'une Release :
 `cmake -S . -B build -DCPACK_PACKAGE_VERSION=1.2.0`.
+Attention, la valeur reste dans le cache CMake : pour revenir a `dev`, supprimez `build/`.
 
 Une fois installe, un autre projet CMake peut utiliser la bibliotheque :
 

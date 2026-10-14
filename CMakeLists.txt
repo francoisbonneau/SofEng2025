@@ -55,6 +55,8 @@ install(
 # ---- Packaging: cmake --build build --target package ----
 # The archive version is given on the command line, for example:
 #   cmake -S . -B build -DCPACK_PACKAGE_VERSION=1.2.0
+# Without it, the archive is named Greeter-dev-...: a local build, not a release
+set(CPACK_PACKAGE_VERSION "dev" CACHE STRING "Version written in the archive name")
 if(WIN32)
     set(CPACK_GENERATOR "ZIP")
 else()
