@@ -17,7 +17,7 @@ Dockerfile         image Docker du programme
 .github/workflows/
     ci.yml         CI/CD : compile, teste, puis publie une version apres chaque merge
 .releaserc.json    configuration de semantic-release (calcul automatique des versions)
-cours/             supports de cours (plan, Docker et CI/CD pas a pas)
+cours/             supports de cours (plan, CMake, Docker et CI/CD pas a pas)
 ```
 
 Regle du projet : **la bibliotheque calcule, le programme affiche.**
