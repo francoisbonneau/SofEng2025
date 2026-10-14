@@ -10,10 +10,10 @@ et le projet compile a la fin de chaque seance.
 | Seance | Theme | Ce qui est ajoute au projet | Support |
 |---|---|---|---|
 | 1 (3 h) | Git, GitHub, compiler a la main | depot GitHub, `greet.cpp` compile avec `g++`, messages de commit `feat:` / `fix:` | |
-| 2 (3 h) | CMake : premiers pas | `CMakeLists.txt`, `add_executable`, `cmake -S -B`, `cmake --build` | |
-| 3 (3 h) | CMake : bibliotheque | `include/greeter/`, `src/greeter/`, `add_library`, `target_link_libraries`, `target_include_directories` | |
-| 4 (3 h) | Tests et configuration | `tests/`, `check.h`, `ctest`, `option()`, `configure_file` (systeme et compilateur dans le code) | [exercice](#seance-4--exercice-configure_file) |
-| 5 (3 h) | Installer et distribuer | `install()`, `find_package`, CPack | |
+| 2 (3 h) | CMake : premiers pas | `CMakeLists.txt`, `add_executable`, `cmake -S -B`, `cmake --build`, `configure_file` (systeme et compilateur dans le code) | [cmake/ etape 1](cmake/README.md) |
+| 3 (3 h) | CMake : bibliotheque | `include/greeter/`, `src/greeter/`, `add_library`, `target_link_libraries`, `target_include_directories`, `option()` | [cmake/ etape 2](cmake/README.md) |
+| 4 (3 h) | Tests et configuration | `tests/`, `check.h`, `ctest`, exercice `configure_file` | [cmake/ etape 3](cmake/README.md), [exercice](#seance-4--exercice-configure_file) |
+| 5 (3 h) | Installer et distribuer | `install()`, `find_package`, CPack | [cmake/ etape 4](cmake/README.md) |
 | 6 (3 h) | Docker | `Dockerfile` simple, couches, puis multi-stage | [docker/](docker/README.md) |
 | 7 (3 h) | CI | etapes 1 a 4 : CI minimale, Pull Requests, matrice, Docker | [cicd/](cicd/README.md) |
 | 8 (3 h) | CD et projet final | etapes 5 a 7 (Release par tag, image, semantic-release), puis ajout d'une fonctionnalite de bout en bout | [cicd/](cicd/README.md) |

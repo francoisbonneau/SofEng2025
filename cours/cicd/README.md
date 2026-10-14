@@ -135,9 +135,23 @@ La version de l'archive vient du tag : le workflow la passe a CMake avec
    docker run --rm ghcr.io/<votre-compte>/<votre-depot>:v1.1.0
    ```
 
+   Le nom de l'image est celui du depot **en minuscules** (exigence de ghcr.io).
+   Pour passer un prenom : `docker run --rm ghcr.io/<votre-compte>/<votre-depot>:v1.1.0 greet Alice`
+   (ce qui suit le nom de l'image remplace le `CMD` du Dockerfile).
+
 **A observer :** l'image dans l'onglet **Packages** du depot.
-Si `docker run` refuse l'acces, rendez le package public
-(*Package settings > Change visibility*).
+Une image publiee par la CI est **privee** par defaut : `docker run` repond `denied`
+ou `unauthorized`. Deux solutions :
+
+- rendre le package public (*Package settings > Change visibility > Public*) ;
+- ou se connecter avant avec un **token GitHub** (il remplace le mot de passe) :
+  ```bash
+  gh auth refresh -s read:packages
+  gh auth token | docker login ghcr.io -u <votre-compte> --password-stdin
+  ```
+  Sans la CLI `gh` : creer un token **classic** (les tokens *fine-grained* ne marchent pas
+  avec ghcr.io) dans *Settings > Developer settings > Personal access tokens > Tokens (classic)*,
+  cocher `read:packages`, puis `docker login ghcr.io -u <votre-compte>` et coller le token.
 
 ## Etape 7 : semantic-release, la version automatique
 

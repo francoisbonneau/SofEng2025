@@ -4,6 +4,7 @@
 #   Quand : a chaque Pull Request et a chaque push sur master
 #   - "CI - Compiler et tester" : compile, teste et lance le programme (Linux + Windows)
 #   - "CI - Image Docker"       : verifie que l'image Docker se construit et s'execute
+#   - "CI - Etapes CMake du cours" : verifie que chaque etape de cours/cmake/ compile
 #
 # CD (Deploiement Continu) : LIVRER une nouvelle version
 #   Quand : apres un push sur master (= merge d'une Pull Request), si la CI est verte
@@ -51,6 +52,17 @@ jobs:
           cmake --install build --config Release --prefix install
           ./install/bin/greet Alice
 
+  cmake-steps:
+    name: CI - Etapes CMake du cours
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Compiler et tester chaque etape
+        run: bash cours/cmake/check-steps.sh
+
   docker:
     name: CI - Image Docker
     # On ne construit l'image que si les tests passent
@@ -75,7 +87,7 @@ jobs:
     name: CD - Publier une version
     # Seulement apres un push sur master, et si tous les jobs de CI ont reussi
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [build-and-test, docker]
+    needs: [build-and-test, cmake-steps, docker]
     runs-on: ubuntu-latest
 
     # Droits donnes au GITHUB_TOKEN pour ce job

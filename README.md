@@ -17,7 +17,7 @@ Dockerfile         image Docker du programme
 .github/workflows/
     ci.yml         CI/CD : compile, teste, puis publie une version apres chaque merge
 .releaserc.json    configuration de semantic-release (calcul automatique des versions)
-cours/             supports de cours (plan, Docker et CI/CD pas a pas)
+cours/             supports de cours (plan, CMake, Docker et CI/CD pas a pas)
 ```
 
 Regle du projet : **la bibliotheque calcule, le programme affiche.**
@@ -60,11 +60,13 @@ Installer, puis creer l'archive a distribuer (CPack) :
 
 ```bash
 cmake --install build --prefix install           # -> install/bin, lib, include, cmake
-cmake --build build --target package             # -> build/Greeter-0.1.1-Linux.tar.gz
+cmake --build build --target package             # -> build/Greeter-dev-Linux.tar.gz
 ```
 
-La version (`0.1.1` par defaut) est donnee par la CI au moment d'une Release :
+Sans version, l'archive s'appelle `Greeter-dev-...` : c'est une archive locale,
+pas une version publiee. La vraie version est donnee par la CI au moment d'une Release :
 `cmake -S . -B build -DCPACK_PACKAGE_VERSION=1.2.0`.
+Attention, la valeur reste dans le cache CMake : pour revenir a `dev`, supprimez `build/`.
 
 Une fois installe, un autre projet CMake peut utiliser la bibliotheque :
 
@@ -183,6 +185,7 @@ La premiere version publiee est `1.0.0`. S'il y a une nouvelle version, la CI cr
 
 ```bash
 docker run --rm ghcr.io/francoisbonneau/sofeng2025:latest
+docker run --rm ghcr.io/francoisbonneau/sofeng2025:1.0.0 greet Alice   # une version precise, avec un prenom
 ```
 
 Conseil : fusionner les Pull Requests avec **Squash and merge**, et donner a la PR
